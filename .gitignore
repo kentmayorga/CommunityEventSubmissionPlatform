@@ -1,0 +1,102 @@
+## ----------------------------
+## Visual Studio / MVC Gitignore
+## ----------------------------
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# MonoDevelop / Xamarin Studio
+*.userprefs
+mono_crash.*
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ll]og/
+[Ll]ogs/
+
+# VS cache / temporary files
+.vs/
+.vscode/
+*.log
+*.tmp
+*.tmp_proj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+
+# Project/solution auto-generated files
+*.sln.docstates
+*.dbmdl
+*.dbproj.schemaview
+Generated\ Files/
+
+# Test results / coverage
+[Tt]est[Rr]esult*/
+*.VisualState.xml
+nunit-*.xml
+*.coverage
+*.coveragexml
+*.dotCover
+_NCrunch_*
+*.trx
+*.vsmdi
+
+# NuGet packages
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Node.js / frontend dependencies
+node_modules/
+bower_components/
+
+# ASP.NET / MVC Scaffolding
+ScaffoldingReadMe.txt
+
+# Publish / deployment
+*.publish.xml
+*.azurePubxml
+PublishScripts/
+publish/
+*.pubxml
+*.publishproj
+
+# Ignore Fody, ReSharper, TeamCity, DotCover, etc.
+_Fake/
+_ReSharper*/
+*.DotSettings.user
+_TeamCity*
+.axoCover/*
+!*.axoCover/settings.json
+FakesAssemblies/
+.FodyWeavers.xsd
+
+# Miscellaneous
+*.cache
+*.bak
+*.swp
+*.sdf
+*.dbmdl
+*.mdf
+*.ldf
+*.ndf
+
+# ----------------------------
+# WWWROOT – Keep this tracked!
+# ----------------------------
+# Track all your static files (CSS, JS, images)
+!wwwroot/
