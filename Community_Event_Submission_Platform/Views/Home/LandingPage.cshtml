@@ -1,0 +1,219 @@
+﻿
+@{
+    ViewBag.Title = "CommunityHub Events";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommunityHub Events! - Connect, Discover, Celebrate</title>
+    <link href="~/Content/LandingPage.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="bi bi-calendar-event"></i> CommunityHub Events!</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stats">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cta">Get Started</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <h1>Connect. Discover. <span class="gradient-text">Celebrate Together.</span></h1>
+                    <p>Join thousands of community members discovering amazing events, building connections, and creating unforgettable memories.</p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="@Url.Action("Login","Account")"
+                           class="btn btn-primary-custom text-black text-decoration-none">
+                            Get Started Free
+                        </a>
+                        <button class="btn btn-outline-custom">Learn More</button>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0">
+                    <div class="text-center">
+                        <i class="bi bi-calendar-check" style="font-size: 15rem; color: var(--primary-color); opacity: 0.2;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Why Choose <span class="gradient-text">CommunityHub Events?</span></h2>
+                <p>Everything you need to discover and manage events in one place</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <i class="bi bi-search feature-icon"></i>
+                        <h3>Discover Events</h3>
+                        <p>Find local events tailored to your interests. From concerts to workshops, never miss what matters to you.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <i class="bi bi-people feature-icon"></i>
+                        <h3>Build Community</h3>
+                        <p>Connect with like-minded individuals and grow your network through shared experiences and interests.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <i class="bi bi-lightning feature-icon"></i>
+                        <h3>Easy Management</h3>
+                        <p>Create and manage events effortlessly with our intuitive platform. Track RSVPs and engage attendees.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <i class="bi bi-bell feature-icon"></i>
+                        <h3>Smart Notifications</h3>
+                        <p>Get personalized alerts for events you'll love. Never miss out on opportunities in your community.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <i class="bi bi-shield-check feature-icon"></i>
+                        <h3>Safe & Secure</h3>
+                        <p>Your data is protected with enterprise-level security. Connect with confidence and peace of mind.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 fade-in">
+                    <div class="feature-card">
+                        <i class="bi bi-phone feature-icon"></i>
+                        <h3>Mobile First</h3>
+                        <p>Access events on the go with our responsive design. Stay connected wherever you are.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6 stat-item fade-in">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="col-md-3 col-6 stat-item fade-in">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Events Created</div>
+                </div>
+                <div class="col-md-3 col-6 stat-item fade-in">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Communities</div>
+                </div>
+                <div class="col-md-3 col-6 stat-item fade-in">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <div class="cta-box fade-in">
+                <div class="cta-content">
+                    <h2>Ready to Get Started?</h2>
+                    <p>Join thousands of community members creating unforgettable experiences</p>
+                    <button class="btn btn-primary-custom btn-lg">Start Your Journey Today</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="gradient-text mb-3">CommunityHub Events!</h5>
+                    <p class="text-secondary">Connecting communities through amazing events and shared experiences.</p>
+                </div>
+                <div class="col-md-2 col-6 mb-4 mb-md-0">
+                    <h6 class="mb-3">Product</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-6 mb-4 mb-md-0">
+                    <h6 class="mb-3">Company</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-6 mb-4 mb-md-0">
+                    <h6 class="mb-3">Resources</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">API Docs</a></li>
+                        <li><a href="#">Status</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-6">
+                    <h6 class="mb-3">Legal</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">Licenses</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(99, 102, 241, 0.1);">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="text-secondary mb-0">&copy; 2026 CommunityHub Events. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+<script src="~/Content/LandingPage.js"></script>
+</html>
