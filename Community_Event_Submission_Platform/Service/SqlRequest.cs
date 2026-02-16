@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Community_Event_Submission_Platform.Service
 {
@@ -30,6 +31,7 @@ namespace Community_Event_Submission_Platform.Service
                                 command.Parameters.AddWithValue(param.Key, param.Value);
                             }
                         }
+
                         MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                         adapter.Fill(response);
                     }

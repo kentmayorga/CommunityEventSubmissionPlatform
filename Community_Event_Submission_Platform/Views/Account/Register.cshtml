@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Register";
 }
 
@@ -10,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CommunityHub Events! - Register</title>
     <link rel="stylesheet" href="~/Content/auth-styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
 <body>
     <div class="auth-container">
@@ -80,7 +80,6 @@
                         <div class="input-wrapper">
                             <i class="bi bi-lock input-icon"></i>
                             <input type="password" class="form-control" id="registerPassword" name="password" placeholder="Create a password" required>
-                            <i class="bi bi-eye password-toggle" onclick="togglePassword('registerPassword', this)"></i>
                         </div>
                     </div>
 
@@ -89,7 +88,6 @@
                         <div class="input-wrapper">
                             <i class="bi bi-lock-fill input-icon"></i>
                             <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
-                            <i class="bi bi-eye password-toggle" onclick="togglePassword('confirmPassword', this)"></i>
                         </div>
                     </div>
                 </div>
@@ -132,6 +130,9 @@
             </div>
         </div>
     </div>
-    <script src="~/Content/auth-scripts.js"></script>
+
+    <!-- jQuery MUST be loaded before your script -->
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Content/AccountAuth_Ajax.js"></script>
 </body>
 </html>
