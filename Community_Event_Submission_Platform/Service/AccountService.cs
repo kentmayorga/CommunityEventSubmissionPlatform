@@ -10,6 +10,26 @@ namespace Community_Event_Submission_Platform.Service
     public class AccountService
     {
         public static Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+        public static DataTable Login(User.Login request)
+        {
+            try
+            {
+                parameters.Clear();
+                parameters = new Dictionary<string, string>
+                {
+                    {"@username", request.username},
+                    { "@password", request.password}
+                };
+
+                var query = "SELECT * FROM users WHERE username = @username AND password = @password AND deleted_date IS NULL";
+                return SqlRequest.ExecuteQuery(query, parameters);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public static DataTable Registration(User.Register request)
         {
             try

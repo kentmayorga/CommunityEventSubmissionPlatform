@@ -66,7 +66,7 @@ body {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 650px;
+    max-width: 550px;
     margin: 0 auto;
     padding: 0 1rem;
 }
@@ -114,9 +114,7 @@ body {
     .brand-logo i {
         font-size: 3rem;
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-clip: text;
     }
 
     .brand-logo h2 {
@@ -124,9 +122,7 @@ body {
         font-weight: 700;
         margin-top: 0.5rem;
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-clip: text;
     }
 
     .brand-logo p {
@@ -173,6 +169,7 @@ body {
 
 .input-wrapper {
     position: relative;
+    width: 100%;
 }
 
 .form-control {
