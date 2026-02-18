@@ -37,8 +37,11 @@ html {
     font-size: 1.5rem;
     font-weight: 700;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background-clip: text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 
 .nav-link {
     color: var(--text-secondary) !important;
@@ -136,9 +139,9 @@ html {
 
 .gradient-text {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 .hero p {
     font-size: 1.25rem;
     color: var(--text-secondary);
