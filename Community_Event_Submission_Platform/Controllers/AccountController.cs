@@ -98,6 +98,40 @@ namespace Community_Event_Submission_Platform.Controllers
             }
         }
 
+
+        // GET: Shows the reset password form
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        // POST: Handles the new password submission
+        [HttpPost]
+        public ActionResult ResetPassword(User.ResetPassword request)
+        {
+            try
+            {
+                DataTable response = AccountService.ResetPassword(request);
+                if (response != null && response.Rows.Count > 0)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        message = response.Rows[0]["Message"].ToString(),
+                        redirectUrl = Url.Action("Login", "Account")
+                    });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to reset password." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error: " + ex.Message });
+            }
+        }
+
         public ActionResult ForgotPassword()
         {
             return View();
@@ -112,6 +146,24 @@ namespace Community_Event_Submission_Platform.Controllers
                 DataTable response = AccountService.ForgotPassword(request);
                 if (response != null && response.Rows.Count > 0)
                 {
+                    string resetLink = Url.Action("ResetPassword", "Account",
+                                       new { email = request.email }, 
+                                       Request.Url.Scheme);
+
+                    var emailService = new EmailService();
+                    string body = $@"
+                                    <h3>Password Reset Request</h3>
+                                    <p>Hi, we received a request to reset your password.</p>
+                                    <p>Click the button below to reset it:</p>
+                                    <a href='{resetLink}' 
+                                       style='padding:10px 20px; background:#007bff; color:white; 
+                                              text-decoration:none; border-radius:5px;'>
+                                       Reset Password
+                                    </a>
+                                    <p>If you didn't request this, just ignore this email.</p>";
+
+                    emailService.SendEmail(request.email, "Password Reset Request", body); // lowercase
+
                     return Json(new
                     {
                         success = true,
@@ -129,11 +181,7 @@ namespace Community_Event_Submission_Platform.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new
-                {
-                    success = false,
-                    message = "Error: " + ex.Message
-                });
+                return Json(new { success = false, message = "Error: " + ex.Message });
             }
         }
 
