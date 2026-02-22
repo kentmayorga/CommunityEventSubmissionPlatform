@@ -20,6 +20,11 @@ namespace Community_Event_Submission_Platform.Controllers
             return View();
         }
 
+        public ActionResult MyEvent()
+        {
+            return View();
+        }
+
         public ActionResult Logout() 
         {
             Session.Clear();
