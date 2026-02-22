@@ -26,6 +26,11 @@ namespace Community_Event_Submission_Platform.Controllers
         }
         public ActionResult MyProfile()
         {
+            if (Session["username"] == null)
+                return RedirectToAction("Login", "Account");
+
+            ViewBag.Username = Session["username"].ToString();
+
             return View();
         }
         public ActionResult Logout() 
