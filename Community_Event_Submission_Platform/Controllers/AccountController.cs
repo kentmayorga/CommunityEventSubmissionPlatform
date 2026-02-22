@@ -97,5 +97,45 @@ namespace Community_Event_Submission_Platform.Controllers
                 });
             }
         }
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult ForgotPassword(User.Login request)
+        {
+            try
+            {
+                DataTable response = AccountService.ForgotPassword(request);
+                if (response != null && response.Rows.Count > 0)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        message = response.Rows[0]["Message"].ToString(),
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "An error occurred while processing your request."
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Error: " + ex.Message
+                });
+            }
+        }
+
     }
 }

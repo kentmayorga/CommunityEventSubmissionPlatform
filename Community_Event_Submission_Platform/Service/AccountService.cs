@@ -73,5 +73,38 @@ namespace Community_Event_Submission_Platform.Service
                 throw ex;
             }
         }
+
+        public static DataTable ForgotPassword(User.Login Forgot)
+        {
+            try
+            {
+                parameters.Clear();
+                parameters = new Dictionary<string, string>
+                {
+                    { "@username", Forgot.username },
+                    { "@password", Forgot.password }
+
+                };
+                var query = @"UPDATE users
+                              set password = @password
+                              where username = @username
+                                
+                               SELECT
+                                    CASE
+                                        WHEN EXISTS EXISTS (select 1 from users where username = @username) THEN 0
+                                    ELSE 1
+                                    END AS error_message
+                                    
+                                    CASE
+                                        WHEN EXISTS (select 1 from users where username = @username) THEN 'Password was changed.'
+                                    ELSE 'Username not found.'
+                                    END AS Message";
+                return SqlRequest.ExecuteQuery(query, parameters);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
