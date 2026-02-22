@@ -1,0 +1,224 @@
+﻿:root {
+    --primary-color: #6366f1;
+    --secondary-color: #8b5cf6;
+    --dark-bg: #0f172a;
+    --card-bg: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1f3a 100%);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ── Navbar (identical to landing page) ─────────── */
+.navbar {
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 20px rgba(99, 102, 241, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ── Nav links base ───────────────────────────────── */
+.nav-link {
+    color: var(--text-secondary) !important;
+    transition: all 0.3s ease;
+    position: relative;
+    margin: 0 0.5rem;
+}
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--primary-color);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+/* ── Profile nav link ─────────────────────────────── */
+.profile-link:hover,
+.profile-link.show {
+    color: var(--primary-color) !important;
+    transform: translateY(-2px);
+}
+
+    .profile-link:hover::after,
+    .profile-link.show::after {
+        width: 80%;
+    }
+
+/* ── Logout nav link ──────────────────────────────── */
+.logout-link:hover {
+    color: #f87171 !important;
+    transform: translateY(-2px);
+}
+
+.logout-link::after {
+    background: #f87171;
+}
+
+.logout-link:hover::after {
+    width: 80%;
+}
+
+/* ── User avatar badge ────────────────────────────── */
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+/* ── Dropdown ─────────────────────────────────────── */
+.custom-dropdown {
+    background: var(--card-bg);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    padding: 0.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    min-width: 180px;
+}
+
+    .custom-dropdown .dropdown-item {
+        color: var(--text-secondary);
+        border-radius: 8px;
+        font-size: 0.9rem;
+        padding: 0.55rem 1rem;
+        transition: all 0.2s ease;
+    }
+
+        .custom-dropdown .dropdown-item:hover {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--text-primary);
+            transform: translateX(3px);
+        }
+
+/* ── Gradient text (same as landing) ─────────────── */
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Empty / Home section ─────────────────────────── */
+.user-home {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Same floating blobs as hero */
+    .user-home::before {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+        top: -200px;
+        right: -200px;
+        animation: float 20s ease-in-out infinite;
+    }
+
+    .user-home::after {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+        bottom: -150px;
+        left: -150px;
+        animation: float 15s ease-in-out infinite reverse;
+    }
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(50px, 50px) scale(1.1);
+    }
+}
+
+.empty-state {
+    position: relative;
+    z-index: 1;
+}
+
+.empty-icon {
+    display: block;
+    font-size: 6rem;
+    color: var(--primary-color);
+    opacity: 0.2;
+    margin-bottom: 1.5rem;
+    animation: pulse-icon 3s ease-in-out infinite;
+}
+
+@keyframes pulse-icon {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+
+    50% {
+        transform: scale(1.08);
+        opacity: 0.35;
+    }
+}
+
+.empty-state h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+/* ── Fade-in animation (same as landing) ─────────── */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }

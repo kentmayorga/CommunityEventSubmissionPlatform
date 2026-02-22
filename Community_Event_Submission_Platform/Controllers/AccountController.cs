@@ -21,8 +21,39 @@ namespace Community_Event_Submission_Platform.Controllers
         [HttpPost]
         public ActionResult Login(User.Login request)
         {
-           
-           return View(request);
+            try
+            {
+                DataTable response = new DataTable();
+                response = AccountService.Login(request);
+
+                if (response != null && response.Rows.Count > 0)
+                {
+                    Session["id"] = response.Rows[0]["id"].ToString();
+                    Session["username"] = response.Rows[0]["username"].ToString();
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Login successful!",
+                        redirectUrl = Url.Action("Home", "Client")
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Invalid username or password."
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Login error: " + ex.Message
+                });
+            }
         }
 
         // GET: Account/Register
