@@ -24,7 +24,10 @@ namespace Community_Event_Submission_Platform.Controllers
         {
             return View();
         }
-
+        public ActionResult MyProfile()
+        {
+            return View();
+        }
         public ActionResult Logout() 
         {
             Session.Clear();

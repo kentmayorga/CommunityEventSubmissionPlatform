@@ -33,3 +33,25 @@ document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
         window.location.href = '/Client/Logout';
     }
 });
+
+/*    
+    Profile page JavaScript
+*/
+// ── Fade-in on load ───────────────────────────────
+document.querySelectorAll('.fade-in').forEach(function (el, i) {
+    setTimeout(function () {
+        el.classList.add('visible');
+    }, 100 + i * 120);
+});
+
+// ── Save profile (client-side preview) ───────────
+// Wire saveProfileBtn to your MVC controller POST action as needed
+document.getElementById('saveProfileBtn').addEventListener('click', function () {
+    var loc = document.getElementById('inputLocation').value.trim();
+    var bio = document.getElementById('inputBio').value.trim();
+
+    if (loc) document.getElementById('displayLocation').textContent = loc;
+    if (bio) document.getElementById('displayBio').textContent = bio;
+
+    bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+});
