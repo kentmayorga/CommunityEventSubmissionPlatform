@@ -1,9 +1,12 @@
 ﻿using Community_Event_Submission_Platform.Models;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Community_Event_Submission_Platform.Service
 {
@@ -80,25 +83,52 @@ namespace Community_Event_Submission_Platform.Service
             {
                 parameters.Clear();
                 parameters = new Dictionary<string, string>
-                {
-                    { "@username", Forgot.username },
-                    { "@password", Forgot.password }
+        {
+            { "@username", Forgot.username },
+            { "@email", Forgot.email }  // lowercase
+        };
 
-                };
-                var query = @"UPDATE users
-                              set password = @password
-                              where username = @username
-                                
-                               SELECT
-                                    CASE
-                                        WHEN EXISTS EXISTS (select 1 from users where username = @username) THEN 0
-                                    ELSE 1
-                                    END AS error_message
-                                    
-                                    CASE
-                                        WHEN EXISTS (select 1 from users where username = @username) THEN 'Password was changed.'
-                                    ELSE 'Username not found.'
-                                    END AS Message";
+                var query = @"
+                            SELECT
+                                CASE WHEN EXISTS (SELECT 1 FROM users WHERE username = @username AND email = @email AND deleted_date IS NULL) 
+                                     THEN 'User found.' 
+                                ELSE 'Username or email not found.' 
+                                END AS Message,
+                                CASE WHEN EXISTS (SELECT 1 FROM users WHERE username = @username AND email = @email AND deleted_date IS NULL) 
+                                     THEN 1 ELSE 0 
+                                END AS Success,
+                                email FROM users WHERE username = @username AND email = @email AND deleted_date IS NULL
+                        ";
+                return SqlRequest.ExecuteQuery(query, parameters);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static DataTable ResetPassword(User.ResetPassword request)
+        {
+            try
+            {
+                parameters.Clear();
+                parameters = new Dictionary<string, string>
+        {
+            { "@email", request.Email },
+            { "@newpassword", request.NewPassword }
+        };
+
+                var query = @"
+                            UPDATE users 
+                            SET password = @newpassword 
+                            WHERE email = @email AND deleted_date IS NULL;
+
+                            SELECT
+                                CASE WHEN ROW_COUNT() > 0 
+                                     THEN 'Password reset successful.' 
+                                ELSE 'Email not found.' 
+                                END AS Message;
+                        ";
                 return SqlRequest.ExecuteQuery(query, parameters);
             }
             catch (Exception)

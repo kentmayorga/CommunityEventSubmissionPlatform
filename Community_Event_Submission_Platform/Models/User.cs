@@ -11,6 +11,7 @@ namespace Community_Event_Submission_Platform.Models
         {
             public string username { get; set; }
             public string password { get; set; }
+            public string email { get; set; } 
         }
         public class Register 
         {
@@ -21,6 +22,12 @@ namespace Community_Event_Submission_Platform.Models
             public string firstname { get; set; }
             public string lastname { get; set; }
             public string address { get; set; }
+        }
+        public class ResetPassword
+        {
+            public string Email { get; set; }
+            public string NewPassword { get; set; }
+            public string ConfirmPassword { get; set; }
         }
     }
 }
