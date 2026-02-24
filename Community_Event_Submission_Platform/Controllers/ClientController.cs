@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Community_Event_Submission_Platform.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,16 +17,27 @@ namespace Community_Event_Submission_Platform.Controllers
                 return RedirectToAction("Login", "Account");
 
             ViewBag.Username = Session["username"].ToString();
+            ViewBag.EventList = EventsService.GetAllEvents();
 
             return View();
         }
 
         public ActionResult MyEvent()
         {
+            if (Session["username"] == null)
+                return RedirectToAction("Login", "Account");
+
+            ViewBag.Username = Session["username"].ToString();
+
             return View();
         }
         public ActionResult MyProfile()
         {
+            if (Session["username"] == null)
+                return RedirectToAction("Login", "Account");
+
+            ViewBag.Username = Session["username"].ToString();
+
             return View();
         }
         public ActionResult Logout() 

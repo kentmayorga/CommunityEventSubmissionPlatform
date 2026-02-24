@@ -192,6 +192,7 @@
     <Compile Include="Resources\AppSession.cs" />
     <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\EmailService.cs" />
+    <Compile Include="Service\EventsService.cs" />
     <Compile Include="Service\SqlRequest.cs" />
   </ItemGroup>
   <ItemGroup>
