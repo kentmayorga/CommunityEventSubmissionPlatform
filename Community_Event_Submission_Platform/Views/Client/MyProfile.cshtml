@@ -158,29 +158,32 @@
                         <p class="section-title"><i class="bi bi-calendar2-event me-1"></i> My Events</p>
                         <div class="events-grid">
 
-                            @*
-                                Wire up your real events loop here:
-                                @foreach (var ev in Model.Events) {
+                            @if (ViewBag.events != null && ((System.Data.DataTable)ViewBag.events).Rows.Count > 0)
+                            {
+                                foreach (System.Data.DataRow item in ((System.Data.DataTable)ViewBag.events).Rows)
+                                {
                                     <div class="event-thumb">
                                         <div class="event-thumb-img">
                                             <i class="bi bi-calendar-event"></i>
                                         </div>
                                         <div class="event-thumb-body">
-                                            <p>@ev.Title</p>
-                                            <span>@ev.Date.ToString("MMM dd, yyyy")</span>
+                                            <p>@item["title"]</p>
+                                            <span>@Convert.ToDateTime(item["event_datetime"]).ToString("MMM dd, yyyy")</span>
                                         </div>
                                     </div>
                                 }
-                            *@
+                            }
+                            else
+                            {
+                                <!-- Only show empty state when no events -->
+                                <div class="event-thumb d-flex flex-column align-items-center justify-content-center text-center p-3"
+                                     style="min-height:140px;">
+                                    <i class="bi bi-calendar2 mb-2" style="font-size:1.8rem; color:rgba(99,102,241,0.35);"></i>
+                                    <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">No events yet</p>
+                                </div>
+                            }
 
-                            <!-- Empty state placeholder -->
-                            <div class="event-thumb d-flex flex-column align-items-center justify-content-center text-center p-3"
-                                 style="min-height:140px;">
-                                <i class="bi bi-calendar2 mb-2" style="font-size:1.8rem; color:rgba(99,102,241,0.35);"></i>
-                                <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">No events yet</p>
-                            </div>
-
-                            <!-- Create new event -->
+                            <!-- Always show Create new Event button -->
                             <a href="@Url.Action("MyEvent", "Client")" class="event-create">
                                 <div class="plus-icon"><i class="bi bi-plus-lg"></i></div>
                                 <span>Create new Event</span>
