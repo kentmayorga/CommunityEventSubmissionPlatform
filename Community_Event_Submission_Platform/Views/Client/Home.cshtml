@@ -107,9 +107,7 @@
 
                             @if (!string.IsNullOrEmpty(item["image_url"]?.ToString()))
                             {
-                                <img src="@item["image_url"]"
-                                     class="card-img-top"
-                                     alt="@item["title"]" />
+                                <img  class="card-img-top" src="@Url.Content("~/Utilities/" + item["image_url"])" alt="@item["title"]" />
                             }
                             else
                             {

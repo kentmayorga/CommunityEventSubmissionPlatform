@@ -239,6 +239,16 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Utilities\Database.txt" />
+    <Content Include="Utilities\images\art.jpg" />
+    <Content Include="Utilities\images\bookclub.jpg" />
+    <Content Include="Utilities\images\festival.jpg" />
+    <Content Include="Utilities\images\jazz.jpg" />
+    <Content Include="Utilities\images\market.jpg" />
+    <Content Include="Utilities\images\pitch.jpg" />
+    <Content Include="Utilities\images\run.jpg" />
+    <Content Include="Utilities\images\science.jpg" />
+    <Content Include="Utilities\images\tech.jpg" />
+    <Content Include="Utilities\images\yoga.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
