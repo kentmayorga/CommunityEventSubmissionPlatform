@@ -1,7 +1,24 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Home";
     Layout = null;
+
+    // Helper: map category to emoji
+    Func<string, string> GetEmoji = (cat) =>
+    {
+        switch (cat)
+        {
+            case "Technology": return "💻";
+            case "Community": return "🤝";
+            case "Music": return "🎵";
+            case "Arts & Culture": return "🎨";
+            case "Sports & Fitness": return "🏃";
+            case "Food & Drink": return "🍽️";
+            case "Health & Wellness": return "🧘";
+            case "Education": return "📚";
+            case "Business": return "💼";
+            default: return "📅";
+        }
+    };
 }
 
 <!DOCTYPE html>
@@ -17,7 +34,7 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="bi bi-calendar-event"></i> CommunityHub Events!
@@ -33,8 +50,7 @@
                         <a class="nav-link profile-link dropdown-toggle d-flex align-items-center gap-2"
                            href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="bi bi-person-circle"></div>
-                            Profile
+                            <i class="bi bi-person-circle"></i> @ViewBag.Username
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
                             <li>
@@ -58,7 +74,7 @@
                     <!-- Logout -->
                     <li class="nav-item">
                         <a class="nav-link logout-link d-flex align-items-center gap-1"
-                           href="@Url.Action("Logout","Client")" id="logoutBtn">
+                           href="@Url.Action("Logout", "Client")" id="logoutBtn">
                             <i class="bi bi-box-arrow-right"></i> Logout
                         </a>
                     </li>
@@ -68,19 +84,77 @@
         </div>
     </nav>
 
-    <!-- Empty Home Content -->
-    <section class="user-home">
-        <div class="container text-center">
-            <div class="empty-state fade-in">
-                <i class="bi bi-calendar2-heart empty-icon"></i>
-                <h2 class="mb-3">Welcome back, <span class="gradient-text">@ViewBag.Username</span></h2>
-                <p>Your dashboard is ready. Start exploring events around you.</p>
-            </div>
+    <!-- Main Content -->
+    <div class="container main-content">
+
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <h1>👋 Welcome back, @ViewBag.Username!</h1>
+            <p>Discover and explore events happening in your community.</p>
         </div>
-    </section>
+        <br />
+
+        @if (ViewBag.EventList != null && ViewBag.EventList.Rows.Count > 0)
+        {
+            <div class="row g-4">
+                @foreach (System.Data.DataRow item in ViewBag.EventList.Rows)
+                {
+                    string cat = item["category"].ToString();
+                    string emoji = GetEmoji(cat);
+
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="event-card fade-in">
+
+                            @if (!string.IsNullOrEmpty(item["image_url"]?.ToString()))
+                            {
+                                <img  class="card-img-top" src="@Url.Content("~/Utilities/" + item["image_url"])" alt="@item["title"]" />
+                            }
+                            else
+                            {
+                                <div class="card-img-placeholder">@emoji</div>
+                            }
+
+                            <div class="card-body">
+                                <span class="event-category-badge">@cat</span>
+                                <h5 class="card-title">@item["title"]</h5>
+                                <p class="card-description">@item["description"]</p>
+
+                                <div class="event-meta">
+                                    <div class="meta-item date">
+                                        <i class="bi bi-calendar3"></i>
+                                        @Convert.ToDateTime(item["event_datetime"]).ToString("MMM dd, yyyy hh:mm tt")
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="bi bi-geo-alt"></i>
+                                        @item["location"]
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <a href="@Url.Action("Details", "Client", new { id = item["event_id"] })"
+                                   class="btn-view-details">
+                                    View Details
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <i class="bi bi-calendar-x empty-icon"></i>
+                <h4>No events available at the moment.</h4>
+                <p>Check back soon!</p>
+            </div>
+        }
+
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/client-home.js"></script>
 </body>
 </html>
-
