@@ -28,20 +28,8 @@ namespace Community_Event_Submission_Platform.Controllers
             if (Session["username"] == null)
                 return RedirectToAction("Login", "Account");
             ViewBag.Username = Session["username"].ToString();
-         
-            int userId = int.Parse(Session["id"].ToString());
-           
-            DataTable response = new DataTable();
-            response = EventsService.GetEventByUserId(userId);
 
-            if (response != null && response.Rows.Count > 0)
-            {
-                ViewBag.events = response;
-            }
-            else 
-            {
-                ViewBag.Message = "No events yet.";
-            }
+            ViewBag.UserEventList = EventsService.GetEventByUserId(int.Parse(Session["id"].ToString()));
 
             return View();
         }

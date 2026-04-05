@@ -136,21 +136,51 @@
                             </div>
 
                             <div class="row g-3">
-
-                                @if (ViewBag.events != null && ((System.Data.DataTable)ViewBag.events).Rows.Count > 0)
-                                {
-                                    foreach (System.Data.DataRow item in ((System.Data.DataTable)ViewBag.events).Rows)
-                                    {
+                                @if(ViewBag.events != null && ((System.Data.DataTable)ViewBag.events).Rows.Count > 0) 
+                                { 
+                                    foreach(System.Data.DataRow item in ((System.Data.DataTable)ViewBag.events).Rows) 
+                                    { 
                                         <div class="col-md-6">
-                                            <div class="event-card p-3 rounded">
-                                                <h6 class="fw-semibold mb-1">@item["title"]</h6>
+                                            <div class="event-card-card p-3 rounded">
+                                                <h6 class="fw-semiboldmb-1">@item["title"] </h6>
                                                 <small class="text-muted">
                                                     <i class="bi bi-calendar-event me-1"></i>
                                                     @Convert.ToDateTime(item["event_datetime"]).ToString("MMM dd, yyyy")
                                                 </small>
                                             </div>
                                         </div>
+
+
+                                        <div class="event-tumb">
+                                            <div class="event=tumb-img">
+                                                @if (!string.IsNullOrEmpty(item["image_url"]?.ToString()))
+                                                {
+                                                    <img src="@Url.Content("~/Utilities/" + item["image_url"])"
+                                                         alt="@item["title"]"
+                                                         style="width:100%; height:100%; object-fit:cover; border-radius:8px;" />
+                                                }
+                                                else
+                                                {
+                                                    <i class="bi bi-calendar-event"></i>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="event-thumb-body">
+                                            <p>@item["title"]</p>
+                                            <span>
+                                                @{
+                                                    var eventDate = Convert.ToDateTime(item["event_datetime"]);
+                                                    var eventTime = item["event_time"]?.ToString();
+                                                }
+                                                @eventDate.ToString("MMM dd, yyyy") at @eventTime
+
+                                            </span>
+                                        </div>
+
                                     }
+                                    
                                 }
                                 else
                                 {
@@ -158,7 +188,6 @@
                                         No events yet. Start by creating one!
                                     </div>
                                 }
-
                             </div>
                         </div>
                     </div>

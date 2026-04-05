@@ -182,11 +182,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Events.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppSession.cs" />
@@ -197,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AccountAuth_Ajax.js" />
+    <Content Include="Content\AdminDashboard\AdminSharedLayout.css" />
     <Content Include="Content\auth-styles.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -216,6 +220,8 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\client-home.css" />
     <Content Include="Content\client-home.js" />
+    <Content Include="Content\create-event.css" />
+    <Content Include="Content\create-event.js" />
     <Content Include="Content\LandingPage.css" />
     <Content Include="Content\LandingPage.js" />
     <Content Include="favicon.ico" />
@@ -268,9 +274,13 @@
     <Content Include="Views\Client\MyProfile.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Event.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Event\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
