@@ -51,7 +51,7 @@ if (saveProfileBtn) {
         if (bio) {
             const displayBio = document.getElementById('displayBio');
             if (displayBio) displayBio.textContent = bio;
-        }
+        }sd
 
         const editModal = document.getElementById('editModal');
         if (editModal) {
