@@ -24,12 +24,13 @@ namespace Community_Event_Submission_Platform.Service
                     { "@event_date", response.event_date },
                     { "@event_time", response.event_time },
                     { "@location", response.location },
+                    { "@user_id", response.id.ToString() },
                     { "@image_url", response.image_path ?? "" } 
                 };
 
                 var query = @"INSERT INTO event_submission 
-                              (title, description, category, location, image_url, event_date, event_time) 
-                              VALUES (@title, @description, @category, @location, @image_url, @event_date, @event_time, 'published')";
+                             (title, description, category, location, image_url, event_date, event_time, status, submitter_id) 
+                             VALUES (@title, @description, @category, @location, @image_url, @event_date, @event_time, 'published', @user_id)";
                 SqlRequest.ExecuteQuery(query, parameters);
                 return GetEventByUserId(Convert.ToInt32(response.id));
             }

@@ -18,6 +18,8 @@ namespace Community_Event_Submission_Platform.Controllers
         {
             if (model != null)
             {
+                model.id = Convert.ToInt32(Session["id"]);
+
                 if (model.image_url != null && model.image_url.ContentLength > 0)
                 {
                     // 1️⃣ Ensure the folder exists
