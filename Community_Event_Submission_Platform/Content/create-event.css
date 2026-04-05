@@ -1,0 +1,457 @@
+﻿/* =============================================================
+   create-event.css
+   Extends client-home.css — add this AFTER client-home.css
+   ============================================================= */
+
+/* ── Hero emoji ──────────────────────────────────────────────── */
+.hero-emoji {
+    font-size: 3rem;
+    line-height: 1;
+    opacity: 0.85;
+}
+
+/* ── Step Indicator ──────────────────────────────────────────── */
+.step-indicator {
+    display: flex;
+    align-items: center;
+    margin: 28px 0 32px;
+}
+
+    .step-indicator .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+
+    .step-indicator .step-dot {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid rgba(99, 102, 241, 0.25);
+        background: var(--card-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--text-secondary);
+        transition: all 0.3s ease;
+    }
+
+    .step-indicator .step.active .step-dot {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border-color: transparent;
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    }
+
+    .step-indicator .step.done .step-dot {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .step-indicator .step-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .step-indicator .step.active .step-label {
+        color: var(--primary-color);
+    }
+
+    .step-indicator .step-line {
+        flex: 1;
+        height: 2px;
+        background: rgba(99, 102, 241, 0.15);
+        margin: 0 8px;
+        margin-bottom: 22px;
+        transition: background 0.3s ease;
+    }
+
+        .step-indicator .step-line.done {
+            background: var(--primary-color);
+        }
+
+/* ── Form Steps (show/hide) ──────────────────────────────────── */
+.form-step {
+    display: none;
+}
+
+    .form-step.active {
+        display: block;
+    }
+
+/* ── Card ────────────────────────────────────────────────────── */
+.ce-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+    .ce-card:hover {
+        border-color: rgba(99, 102, 241, 0.28);
+    }
+
+.ce-card-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.12);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ── Inputs (override Bootstrap + match dark theme) ──────────── */
+.ce-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+    .ce-label .req {
+        color: var(--primary-color);
+        margin-left: 2px;
+    }
+
+.ce-input {
+    background: rgba(99, 102, 241, 0.06) !important;
+    border: 1px solid rgba(99, 102, 241, 0.2) !important;
+    color: var(--text-primary) !important;
+    border-radius: 10px !important;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+    .ce-input:focus {
+        background: rgba(99, 102, 241, 0.1) !important;
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+        color: var(--text-primary) !important;
+    }
+
+    .ce-input::placeholder {
+        color: rgba(148, 163, 184, 0.45) !important;
+    }
+
+textarea.ce-input {
+    resize: vertical;
+    min-height: 90px;
+}
+
+select.ce-input option {
+    background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+/* ── Category Pills ──────────────────────────────────────────── */
+.category-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cat-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    background: rgba(99, 102, 241, 0.05);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+    .cat-pill input[type="radio"] {
+        display: none;
+    }
+
+    .cat-pill:hover {
+        border-color: var(--primary-color);
+        color: var(--text-primary);
+        background: rgba(99, 102, 241, 0.1);
+    }
+
+    .cat-pill.selected {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border-color: transparent;
+        color: #fff;
+        box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35);
+    }
+
+/* ── Image Upload ────────────────────────────────────────────── */
+.img-upload-zone {
+    border: 2px dashed rgba(99, 102, 241, 0.25);
+    border-radius: 14px;
+    padding: 36px 24px;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(99, 102, 241, 0.04);
+    transition: all 0.2s ease;
+}
+
+    .img-upload-zone:hover,
+    .img-upload-zone.dragover {
+        border-color: var(--primary-color);
+        background: rgba(99, 102, 241, 0.09);
+    }
+
+.img-upload-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    opacity: 0.4;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.img-upload-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.img-upload-hint {
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.img-preview {
+    max-width: 100%;
+    max-height: 220px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+/* ── Capacity Input ──────────────────────────────────────────── */
+.capacity-input {
+    max-width: 140px;
+}
+
+/* ── Toggles ─────────────────────────────────────────────────── */
+.toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.08);
+}
+
+    .toggle-row:last-of-type {
+        border-bottom: none;
+    }
+
+.toggle-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.toggle-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.ce-toggle {
+    position: relative;
+    width: 46px;
+    height: 26px;
+    flex-shrink: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+    .ce-toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+    }
+
+.toggle-track {
+    position: absolute;
+    inset: 0;
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 20px;
+    transition: all 0.25s ease;
+}
+
+    .toggle-track::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 18px;
+        height: 18px;
+        background: var(--text-secondary);
+        border-radius: 50%;
+        transition: transform 0.25s ease, background 0.25s ease;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+.ce-toggle input:checked + .toggle-track {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-color: transparent;
+}
+
+    .ce-toggle input:checked + .toggle-track::after {
+        transform: translateX(20px);
+        background: #fff;
+    }
+
+/* ── Step Actions ────────────────────────────────────────────── */
+.step-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    margin-bottom: 60px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.ce-btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: var(--text-secondary);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 9px 22px;
+    transition: all 0.2s ease;
+}
+
+    .ce-btn-ghost:hover {
+        border-color: var(--primary-color);
+        color: var(--text-primary);
+        background: rgba(99, 102, 241, 0.07);
+    }
+
+.ce-btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 9px 24px;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    transition: all 0.2s ease;
+}
+
+    .ce-btn-primary:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+        color: #fff;
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+    }
+
+.ce-btn-preview {
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: var(--primary-color);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 9px 22px;
+    transition: all 0.2s ease;
+}
+
+    .ce-btn-preview:hover {
+        background: rgba(99, 102, 241, 0.18);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+/* ── Preview Modal content ───────────────────────────────────── */
+#previewBody .preview-img-placeholder {
+    height: 200px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+#previewBody .preview-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+#previewBody h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+#previewBody .preview-meta {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+    #previewBody .preview-meta.highlight {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+#previewBody .preview-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-top: 14px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 576px) {
+    .hero-emoji {
+        display: none;
+    }
+
+    .step-indicator .step-label {
+        display: none;
+    }
+
+    .step-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+        .step-actions .btn {
+            width: 100%;
+            text-align: center;
+        }
+}

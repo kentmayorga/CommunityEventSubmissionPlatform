@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - @ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/AdminDashboard/AdminSharedLayout.css">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <!-- Just write your navbar directly here -->
+
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <i class="bi bi-calendar-event"></i> CommunityHub Events!
+        </div>
+        <ul class="sidebar-nav">
+            <li>
+                <a class="sidebar-link" href="@Url.Action("Dashboard", "Admin")">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a class="sidebar-link" href="@Url.Action("Event", "Admin")">
+                    <i class="bi bi-calendar"></i> Events
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="sidebar-link" href="@Url.Action("Logout", "Client")" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="admin-wrapper">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -169,7 +169,13 @@
                                         </div>
                                         <div class="event-thumb-body">
                                             <p>@item["title"]</p>
-                                            <span>@Convert.ToDateTime(item["event_datetime"]).ToString("MMM dd, yyyy")</span>
+                                            <span>
+                                                @{
+                                                    var eventDate = Convert.ToDateTime(item["event_date"]);
+                                                    var eventTime = item["event_time"]?.ToString();
+                                                }
+                                                @eventDate.ToString("MMM dd, yyyy") at @eventTime
+                                            </span>
                                         </div>
                                     </div>
                                 }
