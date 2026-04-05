@@ -122,7 +122,11 @@
                                 <div class="event-meta">
                                     <div class="meta-item date">
                                         <i class="bi bi-calendar3"></i>
-                                        @Convert.ToDateTime(item["event_datetime"]).ToString("MMM dd, yyyy hh:mm tt")
+                                        @{
+                                            var eventDate = Convert.ToDateTime(item["event_date"]);
+                                            var eventTime = item["event_time"]?.ToString();
+                                        }
+                                        @eventDate.ToString("MMM dd, yyyy") at @eventTime
                                     </div>
                                     <div class="meta-item">
                                         <i class="bi bi-geo-alt"></i>

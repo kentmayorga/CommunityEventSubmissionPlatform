@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewBag.Title = "My Event";
+﻿@{
+    ViewBag.Title = "Add Event";
     Layout = null;
 
     // Helper: map category to emoji
@@ -27,10 +26,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CommunityHub Events! - My Events!</title>
+    <title>CommunityHub Events! - Add Event</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="~/Content/client-home.css" rel="stylesheet">
+    <link href="~/Content/create-event.css" rel="stylesheet">
 </head>
 <body>
 
@@ -45,14 +45,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
-
-                    <!-- Profile Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link profile-link dropdown-toggle d-flex align-items-center gap-2"
                            href="#" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="bi bi-person-circle"></div>
-                            Profile
+                            <i class="bi bi-person-circle"></i> Profile
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
                             <li>
@@ -72,7 +69,6 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- Logout -->
                     <li class="nav-item">
                         <a class="nav-link logout-link d-flex align-items-center gap-1"
                            href="@Url.Action("Logout","Client")" id="logoutBtn">
@@ -83,76 +79,239 @@
             </div>
         </div>
     </nav>
+
+   
+
+    <!-- Page Content -->
     <div class="container main-content">
-        <div class="hero-banner">
-            <h1>👋 Welcome back, @ViewBag.Username!</h1>
-            <p>Add events!</p>
+        <!-- Hero Banner -->
+        <div class="hero-banner fade-in">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div>
+                    <h1>✨ Add a New Event</h1>
+                    <p>Share something amazing with your community</p>
+                </div>
+                <span class="hero-emoji">📅</span>
+            </div>
         </div>
-        <br />
 
-        @if (ViewBag.events != null && ViewBag.events.Rows.Count > 0)
-        {
-            <div class="row g-4">
-                @foreach (System.Data.DataRow item in ViewBag.events.Rows)
-                {
-                    string cat = item["category"].ToString();
-                    string emoji = GetEmoji(cat);
+        <!-- Step Indicator -->
+        <div class="step-indicator fade-in">
+            <div class="step active" data-step="1">
+                <div class="step-dot">1</div>
+                <div class="step-label">Basics</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="2">
+                <div class="step-dot">2</div>
+                <div class="step-label">Details</div>
+            </div>
+        </div>
 
-                    <div class="col-6 col-md-4 col-lg-3">
-                        <div class="event-card fade-in">
+        <!-- Form -->
+        <form id="createEventForm" action="@Url.Action("Create", "Event")" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
 
-                            @if (!string.IsNullOrEmpty(item["image_url"]?.ToString()))
-                            {
-                                <img class="card-img-top" src="@Url.Content("~/Utilities/" + item["image_url"])" alt="@item["title"]" />
-                            }
-                            else
-                            {
-                                <div class="card-img-placeholder">@emoji</div>
-                            }
+            <!-- STEP 1: title, category, description -->
+            <div class="form-step active" id="step-1">
 
-                            <div class="card-body">
-                                <span class="event-category-badge">@cat</span>
-                                <h5 class="card-title">@item["title"]</h5>
-                                <p class="card-description">@item["description"]</p>
+                <div class="ce-card fade-in">
+                    <div class="ce-card-title"><i class="bi bi-pencil-square"></i> Basic Information</div>
 
-                                <div class="event-meta">
-                                    <div class="meta-item date">
-                                        <i class="bi bi-calendar3"></i>
-                                        @Convert.ToDateTime(item["event_datetime"]).ToString("MMM dd, yyyy hh:mm tt")
-                                    </div>
-                                    <div class="meta-item">
-                                        <i class="bi bi-geo-alt"></i>
-                                        @item["location"]
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="mb-3">
+                        <label class="form-label ce-label" for="title">Event Title <span class="req">*</span></label>
+                        <input type="text" name="title" id="title" class="form-control ce-input"
+                               placeholder="e.g. Community 5K Run &amp; Walk" required />
+                    </div>
 
-                            <div class="card-footer">
-                                <a href="@Url.Action("Details", "Client", new { id = item["event_id"] })"
-                                   class="btn-view-details">
-                                    View Details
-                                </a>
-                            </div>
-
+                    <div class="mb-3">
+                        <label class="form-label ce-label">Category <span class="req">*</span></label>
+                        <div class="category-pills" id="categoryPills">
+                            <label class="cat-pill" data-cat="Sports & Fitness">
+                                <input type="radio" name="category" value="Sports & Fitness" /> 🏃 Sports &amp; Fitness
+                            </label>
+                            <label class="cat-pill" data-cat="Music">
+                                <input type="radio" name="category" value="Music" /> 🎵 Music &amp; Entertainment
+                            </label>
+                            <label class="cat-pill" data-cat="Community">
+                                <input type="radio" name="category" value="Community" /> 🤝 Community
+                            </label>
+                            <label class="cat-pill" data-cat="Education">
+                                <input type="radio" name="category" value="Education" /> 📚 Education
+                            </label>
+                            <label class="cat-pill" data-cat="Food & Drink">
+                                <input type="radio" name="category" value="Food & Drink" /> 🍽️ Food &amp; Drink
+                            </label>
+                            <label class="cat-pill" data-cat="Arts & Culture">
+                                <input type="radio" name="category" value="Arts & Culture" /> 🎨 Arts &amp; Culture
+                            </label>
+                            <label class="cat-pill" data-cat="Technology">
+                                <input type="radio" name="category" value="Technology" /> 💻 Technology
+                            </label>
+                            <label class="cat-pill" data-cat="Health & Wellness">
+                                <input type="radio" name="category" value="Health & Wellness" /> 🧘 Health &amp; Wellness
+                            </label>
                         </div>
                     </div>
-                }
+
+                    <div class="mb-0">
+                        <label class="form-label ce-label" for="description">Description <span class="req">*</span></label>
+                        <textarea name="description" id="description" class="form-control ce-input" rows="3"
+                                  placeholder="Give a brief overview of what attendees can expect…" required></textarea>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <a href="@Url.Action("Home","Client")" class="btn ce-btn-ghost">Cancel</a>
+                    <button type="button" class="btn ce-btn-primary" id="nextStep1">Next <i class="bi bi-arrow-right"></i></button>
+                </div>
             </div>
-        }
-        else
-        {
-            <div class="empty-state">
-                <i class="bi bi-calendar-x empty-icon"></i>
-                <h4>No events available at the moment.</h4>
-                <p>Create on now!</p>
+
+            <!-- STEP 2: event_datetime, location, image_url -->
+            <div class="form-step" id="step-2">
+
+                <div class="ce-card fade-in">
+                    <div class="ce-card-title"><i class="bi bi-geo-alt"></i> Date &amp; Location</div>
+
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label ce-label" for="event_date">Date <span class="req">*</span></label>
+                            <input type="date" name="event_date" id="event_date" class="form-control ce-input" required />
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label ce-label" for="event_time">Time <span class="req">*</span></label>
+                            <input type="time" name="event_time" id="event_time" class="form-control ce-input" required />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label ce-label" for="location">Venue / Address <span class="req">*</span></label>
+                            <input type="text" name="location" id="location" class="form-control ce-input"
+                                   placeholder="e.g. Riverside Park, East Lions Avenue" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ce-card fade-in">
+                    <div class="ce-card-title"><i class="bi bi-image"></i> Event Image</div>
+                    <div class="img-upload-zone" id="imgUploadZone">
+                        <input type="file" name="image_url" id="imgInput" accept="image/*" class="d-none" />
+                        <div id="imgUploadDefault">
+                            <i class="bi bi-camera img-upload-icon"></i>
+                            <p class="img-upload-text">Drag &amp; drop an image here</p>
+                            <span class="img-upload-hint">or click to browse — JPG, PNG, max 5MB</span>
+                        </div>
+                        <div id="imgPreviewWrap" class="d-none">
+                            <img id="imgPreview" src="" alt="Preview" class="img-preview" />
+                            <button type="button" class="btn ce-btn-ghost btn-sm mt-2" id="removeImg">
+                                <i class="bi bi-x-circle me-1"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button type="button" class="btn ce-btn-ghost" id="prevStep2"><i class="bi bi-arrow-left"></i> Back</button>
+                    <button type="button" class="btn ce-btn-preview" id="previewBtn"><i class="bi bi-eye me-1"></i> Preview</button>
+                    <button type="submit" class="btn ce-btn-primary">Publish Event <i class="bi bi-send"></i></button>
+                </div>
             </div>
-        }
+
+        </form>
+
+        <div class="hero-banner fade-in">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div>
+                    <h1>✨ My Events</h1>
+                </div>
+            </div>
+        </div>
+        <div class="m-5">
+            @if (ViewBag.UserEventList != null && ViewBag.UserEventList.Rows.Count > 0)
+            {
+                <div class="row g-4">
+                    @foreach (System.Data.DataRow item in ViewBag.UserEventList.Rows)
+                    {
+                        string cat = item["category"].ToString();
+                        string emoji = GetEmoji(cat);
+
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="event-card fade-in">
+
+                                @if (!string.IsNullOrEmpty(item["image_url"]?.ToString()))
+                                {
+                                    <img class="card-img-top" src="@Url.Content("~/Utilities/" + item["image_url"])" alt="@item["title"]" />
+                                }
+                                else
+                                {
+                                    <div class="card-img-placeholder">@emoji</div>
+                                }
+
+                                <div class="card-body">
+                                    <span class="event-category-badge">@cat</span>
+                                    <h5 class="card-title">@item["title"]</h5>
+                                    <p class="card-description">@item["description"]</p>
+
+                                    <div class="event-meta">
+                                        <div class="meta-item date">
+                                            <i class="bi bi-calendar3"></i>
+                                            @{
+                                                var eventDate = Convert.ToDateTime(item["event_date"]);
+                                                var eventTime = item["event_time"]?.ToString();
+                                            }
+                                            @eventDate.ToString("MMM dd, yyyy") at @eventTime
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="bi bi-geo-alt"></i>
+                                            @item["location"]
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+                                    <a href="@Url.Action("Details", "Client", new { id = item["event_id"] })"
+                                       class="btn-view-details">
+                                        View Details
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <i class="bi bi-calendar-x empty-icon"></i>
+                    <h4>No events available at the moment.</h4>
+                    <p>Check back soon!</p>
+                </div>
+            }
+        </div>
     </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/Content/client-home.js"></script>
+    <!-- Preview Modal -->
+    <div class="modal fade" id="previewModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title gradient-text"><i class="bi bi-eye me-2"></i>Event Preview</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="previewBody">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn ce-btn-ghost" data-bs-dismiss="modal">Edit</button>
+                    <button type="submit" form="createEventForm" class="btn ce-btn-primary">
+                        Publish Event <i class="bi bi-send"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/client-home.js"></script>
+    <script src="~/Content/create-event.js"></script>
 </body>
 </html>
-
-
-

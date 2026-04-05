@@ -30,11 +30,19 @@ namespace Community_Event_Submission_Platform.Controllers
                 {
                     Session["id"] = response.Rows[0]["id"].ToString();
                     Session["username"] = response.Rows[0]["username"].ToString();
+                    Session["role"] = response.Rows[0]["role"].ToString();
+
+                    string role = Session["role"].ToString();
+
+                    string redirectUrl = role == "admin"
+                        ? Url.Action("Dashboard", "Admin")
+                        : Url.Action("Home", "Client");
+
                     return Json(new
                     {
                         success = true,
                         message = "Login successful!",
-                        redirectUrl = Url.Action("Home", "Client")
+                        redirectUrl = redirectUrl
                     });
                 }
                 else
