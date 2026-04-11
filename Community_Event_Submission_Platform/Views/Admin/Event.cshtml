@@ -3,39 +3,41 @@
     ViewBag.Title = "Event";
 }
 
+
+
 <h2>Event Management</h2>
 
-<table class="table table-hover table-bordered align-middle">
-    <thead class="table-light">
-        <tr>
-            <th style="width: 5%;">#</th>
-            <th style="width: 15%; ">Title</th>
-            <th style="width: 50%">Description</th>
-            <th>Category</th>
-            <th>Event Date and Time</th>
-            <th>Location</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (ViewBag.EventList != null && ViewBag.EventList.Rows.Count > 0)
-        {
-            foreach (System.Data.DataRow item in ViewBag.EventList.Rows)
+    <table class="table table-hover table-bordered align-middle">
+        <thead class="table-light">
+            <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 15%; ">Title</th>
+                <th style="width: 50%">Description</th>
+                <th>Category</th>
+                <th>Event Date and Time</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.EventList != null && ViewBag.EventList.Rows.Count > 0)
             {
-                <tr>
-                    <td>@item["event_id"]</td>
-                    <td>@item["title"]</td>
-                    <td>@item["description"]</td>
-                    <td>@item["category"]</td>
-                    <td>
-                        @{
-                            var eventDate = Convert.ToDateTime(item["event_date"]);
-                            var eventTime = item["event_time"]?.ToString();
-                        }
-                        @eventDate.ToString("MMM dd, yyyy") at @eventTime
-                    </td>
-                    <td>@item["location"]</td>
-                </tr>
+                foreach (System.Data.DataRow item in ViewBag.EventList.Rows)
+                {
+                    <tr>
+                        <td>@item["event_id"]</td>
+                        <td>@item["title"]</td>
+                        <td>@item["description"]</td>
+                        <td>@item["category"]</td>
+                        <td>
+                            @{
+                                var eventDate = Convert.ToDateTime(item["event_date"]);
+                                var eventTime = item["event_time"]?.ToString();
+                            }
+                            @eventDate.ToString("MMM dd, yyyy") at @eventTime
+                        </td>
+                        <td>@item["location"]</td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
