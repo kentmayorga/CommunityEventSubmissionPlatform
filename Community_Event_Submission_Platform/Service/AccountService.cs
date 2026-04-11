@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace Community_Event_Submission_Platform.Service
 {
@@ -132,6 +133,58 @@ namespace Community_Event_Submission_Platform.Service
                 return SqlRequest.ExecuteQuery(query, parameters);
             }
             catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static DataTable GetProfileById(string id)
+        {
+            try
+            {
+                parameters.Clear();
+                parameters = new Dictionary<string, string>
+                {
+                    { "@id", id }
+                };
+                var query = "SELECT * FROM users WHERE id = @id AND deleted_date IS NULL";
+                return SqlRequest.ExecuteQuery(query, parameters);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static DataTable UpdateProfile(string id, string profile, string address, string bio)
+        {
+            try
+            {
+                parameters.Clear();
+                parameters = new Dictionary<string, string>
+                {
+                    { "@id", id },
+                    { "@profile", profile },
+                    { "@address", address },
+                    { "@bio", bio }
+                };
+                var query = @"
+                    UPDATE users 
+                    SET username = @username, address = @address, bio = @bio 
+                    WHERE id = @id AND deleted_date IS NULL;
+ 
+                    SELECT 
+                        CASE WHEN ROW_COUNT() > 0 
+                             THEN 'Profile updated successfully.' 
+                        ELSE 'No changes were made.' 
+                        END AS Message,
+                        CASE WHEN ROW_COUNT() > 0 THEN 1 ELSE 0 END AS Success,
+                        username, address, bio
+                    FROM users WHERE id = @id AND deleted_date IS NULL;
+                ";
+                return SqlRequest.ExecuteQuery(query, parameters);
+            }
+            catch(Exception)
             {
                 throw;
             }

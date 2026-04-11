@@ -1,7 +1,156 @@
-﻿@{
+﻿
+@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.Title = "Dashboard";
 }
+<link rel="stylesheet" href="~/Content/AdminDashboard/Dashboard.css" />
 
-<h2>Dashboard</h2>
+@if (ViewBag.Error != null)
+{
+    <div class="alert-error">
+        <strong>Error:</strong> @ViewBag.Error
+    </div>
+}
+
+<div class="page-title">
+    <div class="stat-row">
+
+        <!-- Total Users Card -->
+        <div class="stat-card">
+            <div class="stat-icon icon-users">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+            </div>
+            <div class="stat-info">
+                <p class="stat-label">Total Users</p>
+                <p class="stat-value">@ViewBag.TotalUsers</p>
+                @if (ViewBag.UserGrowthPct != null)
+                {
+                    int growth = (int)ViewBag.UserGrowthPct;
+                    if (growth > 0)
+                    {
+                        <p class="stat-change up">&#9650; @growth% this month</p>
+                    }
+                    else if (growth < 0)
+                    {
+                        <p class="stat-change down">&#9660; @Math.Abs(growth)% this month</p>
+                    }
+                    else
+                    {
+                        <p class="stat-change neutral">&#9679; No change this month</p>
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Total Events Card -->
+        <div class="stat-card">
+            <div class="stat-icon icon-all">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+                </svg>
+            </div>
+            <div class="stat-info">
+                <p class="stat-label">All Events</p>
+                <p class="stat-value">@ViewBag.TotalEvents</p>
+                <p class="stat-change neutral">&#9679; Total created</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+        <!-- Combined Chart -->
+        <div class="card card-combined-chart">
+            <div class="card-header">
+                <span class="card-title">Total Users &amp; All Events</span>
+                <div class="chart-legend">
+                    <span class="legend-dot dot-users"></span><span class="legend-label">Users</span>
+                    <span class="legend-dot dot-events"></span><span class="legend-label">Events</span>
+                </div>
+                <select class="filter-select">
+                    <option>This Year</option>
+                    <option>Last 6 Months</option>
+                </select>
+            </div>
+            <div class="chart-wrap chart-wrap-lg">
+                <canvas id="combinedChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Events Table -->
+        <div class="card card-all-events">
+            <div class="card-header">
+                <span class="card-title">All Events</span>
+                <select class="filter-select" id="statusFilter" onchange="filterEvents(this.value)">
+                    <option value="All">All</option>
+                    <option value="Upcoming">Upcoming</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <div class="table-wrap">
+                <table class="events-table">
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsTableBody">
+                        @if (ViewBag.RecentEvents != null)
+                        {
+                            foreach (System.Data.DataRow row in ((System.Data.DataTable)ViewBag.RecentEvents).Rows)
+                            {
+                                string status = row["status"].ToString();
+                                string badgeClass = status == "Upcoming" ? "status-upcoming" : "status-done";
+                                string dateStr = Convert.ToDateTime(row["event_date"]).ToString("MMM dd, yyyy");
+
+                                <tr data-status="@status">
+                                    <td>@row["title"]</td>
+                                    <td>@dateStr</td>
+                                    <td><span class="status-badge @badgeClass">@status</span></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" style="text-align:center; color:#6b7280;">No events found.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Inject server data as JS variables for Chart.js -->
+<script>
+    var chartLabels     = @Html.Raw(ViewBag.ChartLabels     ?? "[\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\"]");
+    var chartUsersData  = @Html.Raw(ViewBag.ChartUsersData  ?? "[0,0,0,0,0,0]");
+    var chartEventsData = @Html.Raw(ViewBag.ChartEventsData ?? "[0,0,0,0,0,0]");
+
+    function filterEvents(status) {
+        var rows = document.querySelectorAll('#eventsTableBody tr');
+        rows.forEach(function (row) {
+            if (status === 'All' || row.dataset.status === status) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="~/Content/AdminDashboard/Admin-Dashboard.js"></script>
+
 
