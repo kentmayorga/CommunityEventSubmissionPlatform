@@ -36,7 +36,7 @@ namespace Community_Event_Submission_Platform.Controllers
 
                     string redirectUrl = role == "admin"
                         ? Url.Action("Dashboard", "Admin")
-                        : Url.Action("Home", "Client");
+                        : Url.Action("JoinOrCreateCommunityForm", "Community");
 
                     return Json(new
                     {
