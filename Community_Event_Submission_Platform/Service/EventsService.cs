@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Community_Event_Submission_Platform.Service
 {
@@ -25,7 +26,7 @@ namespace Community_Event_Submission_Platform.Service
                     { "@event_time", response.event_time },
                     { "@location", response.location },
                     { "@user_id", response.id.ToString() },
-                    { "@image_url", response.image_path ?? "" } 
+                    { "@image_url", response.image_path ?? "" }
                 };
 
                 var query = @"INSERT INTO event_submission 
@@ -34,7 +35,7 @@ namespace Community_Event_Submission_Platform.Service
                 SqlRequest.ExecuteQuery(query, parameters);
                 return GetEventByUserId(Convert.ToInt32(response.id));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -71,5 +72,42 @@ namespace Community_Event_Submission_Platform.Service
             }
         }
 
+        public static DataTable CreateCommunity(Community response)
+        {
+            try
+            {
+                parameters.Clear();
+                parameters = new Dictionary<string, string>
+                {
+                    { "@name",         response.name },
+                    { "@description",  response.description },
+                    { "@privacy",      response.privacy ?? "public" },
+                    { "@created_by",   response.created_by.ToString() },
+                    { "@created_date", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
+                    { "@modified_date", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") }
+                };
+
+                string query = @"INSERT INTO communities 
+                            (name, description, privacy, created_by, created_date, modified_date) 
+                         VALUES 
+                            (@name, @description, @privacy, @created_by, @created_date, @modified_date)";
+
+                return SqlRequest.ExecuteQuery(query, parameters);
+            }
+            catch (Exception) { throw; }
+        }
+        public static DataTable GetAllCommunities()
+        {
+            try
+            {
+                parameters.Clear();
+                string query = @"SELECT * FROM communities 
+                         WHERE deleted_date IS NULL 
+                         ORDER BY created_date DESC";
+                return SqlRequest.ExecuteQuery(query, parameters);
+            }
+            catch (Exception) { throw; }
+
+        }
     }
 }
